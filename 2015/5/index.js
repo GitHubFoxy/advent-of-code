@@ -54,27 +54,3 @@ for (let i = 0; i < splitted.length; i++) {
 }
 console.log(good_strings);
 
-
-// for (let i = 0; i < splitted.length; i++) {
-//     for (let j = 0; j < splitted[i].length; j++) {
-//         if (goodSubstrings.includes(splitted[i][j])) {
-//             vowels++
-//         }
-//     }
-//     if (vowels < 3) {
-//         continue
-//     }
-//     for (let j = 0; j < splitted[i].length - 1; j++) {
-//         if (splitted[i][j] == splitted[i][j+1]) {
-//             break
-//         }
-//     }
-//     for (let j = 0; j < forbiddenSubstrings.length; j++) {
-//         if (splitted[i].includes(forbiddenSubstrings[j])) {
-//             continue
-//         }
-//     }
-//     vowels = 0
-//     good_strings++
-// }
-// console.log(good_strings)

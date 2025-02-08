@@ -8,6 +8,8 @@
 
 ## The best way to iterate?
 
-## There is diffrent types of data that we have 
+## There is diffrent types of data that we have
 
 ## Diffrence between for, while, and do while loops
+
+##
