@@ -1,4 +1,55 @@
-const full = `
+let GlobalState = 50
+let password = 0
+
+// Рекурсия проходит КАЖДЫЙ клик по одному
+function countClickByClick(current, stepsLeft, direction) {
+    // База рекурсии: закончились шаги
+    if (stepsLeft === 0) {
+        return 0
+    }
+    
+    // Делаем ОДИН клик
+    current += direction
+    
+    // Нормализуем текущую позицию (циферблат 0-99)
+    if (current > 99) current = 0
+    if (current < 0) current = 99
+    
+    // Проверяем: попали на 0?
+    const hitZero = (current === 0) ? 1 : 0
+    
+    // Рекурсивно обрабатываем оставшиеся клики
+    return hitZero + countClickByClick(current, stepsLeft - 1, direction)
+}
+
+function changeState(distance) {
+    const direction = distance > 0 ? 1 : -1
+    const steps = Math.abs(distance)
+    
+    // Считаем пересечения через рекурсию
+    password += countClickByClick(GlobalState, steps, direction)
+    
+    // Обновляем глобальное состояние
+    GlobalState += distance
+    while (GlobalState > 99) GlobalState -= 100
+    while (GlobalState < 0) GlobalState += 100
+}
+
+function main(input) {
+    input.split("\n").forEach((line) => {
+        line = line.trim()
+        if (!line) return
+        
+        if (line.includes("R")) {
+            changeState(parseInt(line.slice(1)))
+        } else if (line.includes("L")) {
+            changeState(-parseInt(line.slice(1)))
+        }
+    })
+}
+
+// Замени на свои данные:
+export const input_data = `
 L4
 R49
 L25
@@ -4568,74 +4619,8 @@ R47
 L38
 L9
 R18
-R10
-`
-const test = `
-L68
-L30
-R48
-L5
-R60
-L55
-L1
-L99
-R14
-L82
-`
-
-
-let GlobalState = 50
-var password = 0
-
-function maath(state) {
-    if (GlobalState >= 0 && GlobalState <= 100) return
-    if (state === 0) {
-        password++
-    }
-    if (state === 100) {
-        GlobalState = 0
-    }
-    if (state > 99) {
-        password++
-        GlobalState = state - 100
-        maath(GlobalState)  // ✅ передаём новое значение
-    }
-    if (state < 0) {
-        password++
-        GlobalState = state + 100
-        maath(GlobalState)  // ✅ передаём новое значение
-    }
-}
-
-
-function changeState(number, i) {
-    GlobalState+=number
-    maath(GlobalState)
-}
-
-function main() {
-    test.split("\n").forEach((line, index) => {
-        if (line.includes("R")) {
-            changeState(parseInt(line.slice(1)), index )
-        } else if (line.includes("L")) {
-            changeState(parseInt(-line.slice(1)), index )
-        }
-    });
-}
-
-// 50 - 68 = -18 => 100-18 => 82 !
-// 82 - 30 = 52 
-// 52 + 48 = 100 => 0
-
-
-// Bigger than 99
-// 98 + 5 => 103 => -100 => 3
-
-// Less than 0 
-// 5 - 15 => -10 + 100 => 99, 98, 97, 96, 95, 94 ,93 ,92 ,91 ,90 
-
-
+R10`
 
 console.log("Starting at:", GlobalState)
-main()
-console.log(password)
+main(input_data)
+console.log("Password:", password)

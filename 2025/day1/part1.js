@@ -1,4 +1,4 @@
-const input_data = `
+export const input_data = `
 L4
 R49
 L25
